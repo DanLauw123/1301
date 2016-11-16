@@ -100,7 +100,7 @@ public class GroupProject {
         System.out.println("Opt 1: Insert your name, ticket type, and fine ");
         System.out.println("Opt 2: View entered list (Sorted person name)");
         System.out.println("Opt 3: Display file");
-        System.out.println("Opt 4: Search file");
+        System.out.println("Opt 4: Search person");
         System.out.println("Opt 5: View file");
         System.out.println("Opt 6: Make adjustment to ticket type");
         System.out.println("Opt 7: Delete file  \n");
@@ -190,9 +190,8 @@ public class GroupProject {
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
         String home = System.getProperty("user.home");
-        String file = home + File.separator + "Desktop" + File.separator + "people.txt";
+        File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
 
-        String txt = ",";
         BufferedReader br = null;
 
         try {
@@ -201,7 +200,7 @@ public class GroupProject {
             while (((sCurrentLine = br.readLine()) != null)) {
 
                 //use comma to separate between variables
-                String[] person = sCurrentLine.split(txt); //locates which part of the string you want to matc with
+                String[] person = sCurrentLine.split(" "); //locates which part of the string you want to match with
                 if (person[0].equalsIgnoreCase(searchName)) {
                     match = true; //if the name matches, the boolean returns true.
                 }
@@ -215,7 +214,7 @@ public class GroupProject {
         }
         if (match) {
             System.out.println("We found a match in our system.");
-
+            System.out.println(searchName + " exist ");
 
         } else {
             System.out.println("Sorry, no such name is found in our inventory. ");
