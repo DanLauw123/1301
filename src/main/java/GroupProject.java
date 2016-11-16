@@ -216,15 +216,21 @@ public class GroupProject {
 
         BufferedReader reader = null;
         PrintWriter outputStream = null;
+        String line = null;
         ArrayList<String> rows = new ArrayList<String>();
+        File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
+        File file2 = new File(home + File.separator + "Desktop" + File.separator + "sortedPeople.txt");
+
 
         try {
-            reader = new BufferedReader(new FileReader("people.txt"));
-            outputStream = new PrintWriter(new FileWriter("sortedPeople.txt"));
+            if (!file2.exists()){
+                file2.createNewFile();
+            }
+            reader = new BufferedReader(new FileReader(file));
+            outputStream = new PrintWriter(new FileWriter(file2));
 
-            String file;
-            while ((file = reader.readLine()) != null) {
-                rows.add(file);
+            while ((line = reader.readLine()) != null) {
+                rows.add(line);
             }
             Collections.sort(rows);
             String[] strArr = rows.toArray(new String[0]);
@@ -236,6 +242,8 @@ public class GroupProject {
             System.out.println(e.getMessage());
 
         }
+        outputStream.close();
+        System.out.println("Your File is successfully saved under 'sortedPeople.txt'. ");
         int choice = openerAndSelect();
         makeSelection(choice);
     }
