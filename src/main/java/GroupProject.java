@@ -246,6 +246,7 @@ public class GroupProject {
         System.out.println("Your File is successfully saved under 'sortedPeople.txt'. ");
         int choice = openerAndSelect();
         makeSelection(choice);
+        System.out.println();
     }
 
     public static void replaceFunction() {
