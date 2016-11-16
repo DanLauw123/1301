@@ -160,7 +160,7 @@ public class GroupProject {
         Scanner in = null;
         try {
             in = new Scanner(new File(file));
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
         while (in.hasNext()) { // iterates each line in the file
@@ -170,6 +170,9 @@ public class GroupProject {
 
         }
         in.close();
+
+        int select = openerAndSelect();
+        makeSelection(select);
     }
 
     /**
@@ -218,10 +221,9 @@ public class GroupProject {
 
         } else {
             System.out.println("Sorry, no such name is found in our inventory. ");
-            openerAndSelect();
         }
-
-
+        int select = openerAndSelect();
+        makeSelection(select);
     }
 
     /**
@@ -268,26 +270,25 @@ public class GroupProject {
      *
      */
     private static void replaceFunction() {
-        System.out.println("Which type of ticket would you like to change?");
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader("people.txt"));
-            try {
-                String line;
-                while((line = br.readLine()) != null) {
-                    System.out.println(line);
-                }
 
-            }catch (IOException e) {
-                e.printStackTrace();
+        //show them the  (create the for loop)
 
-            }
 
-        }catch (FileNotFoundException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
-        String newTicketType = console.nextLine();
+
+
+        // sout (which ticket type you want to replace?)
+
+
+
+
+        // ask user to change ticketType
+        //ask user to replace it with the new tickettype
+        //make a brand new variable "newTicketType"
+
+
+
+
+        // write it back to people.txt with the new TicketType (
 
 
 
