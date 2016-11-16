@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class GroupProject {
     private static Scanner console = new Scanner(System.in);
     private static boolean userSelected;
-    // home folder
     private static String home = System.getProperty("user.home");
     private static String file = home + File.separator + "Desktop" + File.separator + "people.txt";
     private static String line = "";
@@ -16,7 +15,6 @@ public class GroupProject {
 
 
     public static void main(String[] args) {
-
         welcome();
     }
 
@@ -26,7 +24,7 @@ public class GroupProject {
      *
      * @return
      */
-    public static void askUser() {
+    private static void askUser() {
         // Create the ArrayList for the entire group of people
         ArrayList<ArrayList<String>> personList = new ArrayList();
 
@@ -74,7 +72,7 @@ public class GroupProject {
      *
      * @param
      */
-    public static void saveFile(ArrayList<ArrayList<String>> array) {
+    private static void saveFile(ArrayList<ArrayList<String>> array) {
         File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
 
         try {
@@ -93,7 +91,11 @@ public class GroupProject {
         }
     }
 
-    public static int openerAndSelect() {
+    /**
+     *
+     * @return
+     */
+    private static int openerAndSelect() {
         System.out.println("Welcome, please select one of the following options");
         System.out.println("Opt 1: Insert your name, ticket type, and fine ");
         System.out.println("Opt 2: View entered list (Sorted person name)");
@@ -120,7 +122,10 @@ public class GroupProject {
         return i;
     }
 
-
+    /**
+     *
+     * @param option
+     */
     private static void makeSelection(int option) {
         switch (option) {
             case 0:
@@ -148,7 +153,10 @@ public class GroupProject {
         }
     }
 
-    private static void displayFile() {
+    /**
+     *
+     */
+    private static void displayFile(){
         Scanner in = null;
         try {
             in = new Scanner(new File(file));
@@ -167,14 +175,20 @@ public class GroupProject {
         makeSelection(select);
     }
 
-    public static void welcome() {
+    /**
+     *
+     */
+    private static void welcome() {
         System.out.println("Welcome to Central Intelligence. ");
         System.out.println();
         int select = openerAndSelect();
         makeSelection(select);
     }
 
-    public static void searchPerson() {
+    /**
+     *
+     */
+    private static void searchPerson() {
         boolean match = false;
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
@@ -212,8 +226,10 @@ public class GroupProject {
         makeSelection(select);
     }
 
-
-    public static void sortedPersonName() {
+    /**
+     *
+     */
+    private static void sortedPersonName() {
 
         BufferedReader reader = null;
         PrintWriter outputStream = null;
@@ -250,10 +266,10 @@ public class GroupProject {
         System.out.println();
     }
 
-    public static void replaceFunction() {
-        //read file
-
-
+    /**
+     *
+     */
+    private static void replaceFunction() {
 
         //show them the  (create the for loop)
 
@@ -273,8 +289,6 @@ public class GroupProject {
 
 
         // write it back to people.txt with the new TicketType (
-
-
 
 
 
