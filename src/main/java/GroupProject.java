@@ -1,3 +1,5 @@
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +9,7 @@ import java.util.Scanner;
 
 public class GroupProject {
     private static Scanner console = new Scanner(System.in);
+
     private static boolean userSelected;
     // home folder
     private static String home = System.getProperty("user.home");
@@ -26,7 +29,7 @@ public class GroupProject {
      *
      * @return
      */
-    public static void askUser() {
+    private static void askUser() {
         // Create the ArrayList for the entire group of people
         ArrayList<ArrayList<String>> personList = new ArrayList();
 
@@ -74,7 +77,7 @@ public class GroupProject {
      *
      * @param
      */
-    public static void saveFile(ArrayList<ArrayList<String>> array) {
+    private static void saveFile(ArrayList<ArrayList<String>> array) {
         File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
 
         try {
@@ -93,7 +96,7 @@ public class GroupProject {
         }
     }
 
-    public static int openerAndSelect() {
+    private static int openerAndSelect() {
         System.out.println("Welcome, please select one of the following options");
         System.out.println("Opt 1: Insert your name, ticket type, and fine ");
         System.out.println("Opt 2: View entered list (Sorted person name)");
@@ -167,14 +170,14 @@ public class GroupProject {
         makeSelection(select);
     }
 
-    public static void welcome() {
+    private static void welcome() {
         System.out.println("Welcome to Central Intelligence. ");
         System.out.println();
         int select = openerAndSelect();
         makeSelection(select);
     }
 
-    public static void searchPerson() {
+    private static void searchPerson() {
         boolean match = false;
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
@@ -213,7 +216,7 @@ public class GroupProject {
     }
 
 
-    public static void sortedPersonName() {
+    private static void sortedPersonName() {
 
         BufferedReader reader = null;
         PrintWriter outputStream = null;
@@ -249,39 +252,72 @@ public class GroupProject {
         makeSelection(choice);
         System.out.println();
     }
+    // this method is to ask user to replace their ticket type.
+    private static void replaceFunction() {
+        ArrayList<ArrayList<String>> personList = new ArrayList();
+        ArrayList<String> person = new ArrayList();
 
-    public static void replaceFunction() {
-        //read file
+        //shows the user
 
+        Scanner in = null;
+        try {
+            in = new Scanner(new File(file));
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        while (in.hasNext()) { // iterates each line in the file
 
-
-        //show them the  (create the for loop)
-
-
-
-
-        // sout (which ticket type you want to replace?)
-
-
-
-
-        // ask user to change ticketType
-        //ask user to replace it with the new tickettype
-        //make a brand new variable "newTicketType"
-
-
-
-
-        // write it back to people.txt with the new TicketType (
+            String line = in.nextLine();
+            String[] newLine = line.split(" ");
+            person.clear();
+            person.add(0, newLine[0]);
+            person.add(1, newLine[1]);
+            person.add(2, newLine[2]);
 
 
+            personList.add(person);
+
+            //
 
 
 
+        }
+        in.close();
+        int i=0;
+
+           ArrayList<String> newTicketList = new ArrayList();
+           //show them the  (create the for loop)
+
+
+           // sout (which ticket type you want to replace?)
+           System.out.println("From the list above, which ticket type would you like to change?");
+           String index1 = console.nextLine();
+
+
+           // ask user to change ticketType
+           System.out.println("Please enter your new ticket type below");
+           //ask user to replace it with the new ticket type
+           //make a brand new variable "newTicketType"
+           String newTicketType = console.nextLine();
+           if (index1.equalsIgnoreCase(newTicketType)) {
+               System.out.println("You entered the same type. Please try again.");
+               //return to the opening to allow the user to re-insert.
+               makeSelection(openerAndSelect());
+           } else {
+               // write it back to people.txt with the new type of ticket.
+               newTicketList.add(newTicketType);
+               personList.add(i, newTicketList);
+               saveFile(personList);
+           }
+
+
+
+
+       }
     }
 
 
-}
+
 
 
 
