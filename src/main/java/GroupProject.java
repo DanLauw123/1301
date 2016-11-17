@@ -3,19 +3,33 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
 
 
 public class GroupProject {
     private static Scanner console = new Scanner(System.in);
     private static boolean userSelected;
     private static String home = System.getProperty("user.home");
-    private static String file = home + File.separator + "Desktop" + File.separator + "people.txt";
+    public static File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
+    public static File file2 = new File(home + File.separator + "Desktop" + File.separator + "sortedPeople.txt");
     private static String line = "";
     private static String delimit = ",";
 
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         welcome();
+    }
+
+    /**
+     *
+     */
+    private static void welcome() {
+        System.out.println("Welcome to Central Intelligence. ");
+        System.out.println();
+        makeSelection(openerAndSelect());
     }
 
     /**
@@ -61,10 +75,7 @@ public class GroupProject {
             }
         }
         while (askAgain);
-        int select = openerAndSelect();
-        makeSelection(select);
-
-
+        makeSelection(openerAndSelect());
     }
 
     /**
@@ -73,8 +84,6 @@ public class GroupProject {
      * @param
      */
     private static void saveFile(ArrayList<ArrayList<String>> array) {
-        File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
-
         try {
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -149,6 +158,7 @@ public class GroupProject {
                 replaceFunction();
                 break;
             case 7:
+                deleteFiles();
                 break;
         }
     }
@@ -159,30 +169,17 @@ public class GroupProject {
     private static void displayFile(){
         Scanner in = null;
         try {
-            in = new Scanner(new File(file));
+            in = new Scanner(file);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
         while (in.hasNext()) { // iterates each line in the file
             String line = in.nextLine();
             System.out.println(line);
-
-
         }
         in.close();
 
-        int select = openerAndSelect();
-        makeSelection(select);
-    }
-
-    /**
-     *
-     */
-    private static void welcome() {
-        System.out.println("Welcome to Central Intelligence. ");
-        System.out.println();
-        int select = openerAndSelect();
-        makeSelection(select);
+        makeSelection(openerAndSelect());
     }
 
     /**
@@ -193,10 +190,7 @@ public class GroupProject {
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
         String home = System.getProperty("user.home");
-        File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
-
         BufferedReader br = null;
-
         try {
             String sCurrentLine;
             br = new BufferedReader(new FileReader(file));
@@ -207,8 +201,6 @@ public class GroupProject {
                 if (person[0].equalsIgnoreCase(searchName)) {
                     match = true; //if the name matches, the boolean returns true.
                 }
-
-
             }
 
 
@@ -222,8 +214,7 @@ public class GroupProject {
         } else {
             System.out.println("Sorry, no such name is found in our inventory. ");
         }
-        int select = openerAndSelect();
-        makeSelection(select);
+        makeSelection(openerAndSelect());
     }
 
     /**
@@ -235,9 +226,6 @@ public class GroupProject {
         PrintWriter outputStream = null;
         String line = null;
         ArrayList<String> rows = new ArrayList<String>();
-        File file = new File(home + File.separator + "Desktop" + File.separator + "people.txt");
-        File file2 = new File(home + File.separator + "Desktop" + File.separator + "sortedPeople.txt");
-
 
         try {
             if (!file2.exists()){
@@ -294,6 +282,17 @@ public class GroupProject {
 
     }
 
+    /**
+     * Deletes the two files created as part of this application
+     */
+    private static void deleteFiles() {
+        if(file.exists()) {
+            file.delete();
+        }
+        if(file2.exists()){
+            file2.delete();
+        }
+    }
 
 }
 
