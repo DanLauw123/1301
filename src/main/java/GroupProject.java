@@ -163,6 +163,7 @@ public class GroupProject {
     }
 
     private static void displayFile() {
+        // use scanner to scan the file.
         Scanner in = null;
         try {
             in = new Scanner(file);
@@ -185,6 +186,7 @@ public class GroupProject {
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
         BufferedReader br = null;
+        int count = 0;
         try {
             String sCurrentLine;
             br = new BufferedReader(new FileReader(file));
@@ -194,8 +196,9 @@ public class GroupProject {
                 String[] person = sCurrentLine.split(" "); //locates which part of the string you want to match with
                 if (person[0].equalsIgnoreCase(searchName)) {
                     match = true; //if the name matches, the boolean returns true.
+                } else {
+                    count++;
                 }
-
             }
 
 
@@ -273,33 +276,43 @@ public class GroupProject {
         in.close();
         int i = 0;
 
-        //show them the  (create the for loop)
+        //show them the index (which is index 1 for ticket type).  (create the for loop)
         for (ArrayList<String> s: personList) {
-            System.out.println(s.get(1));
+            System.out.println("Name: " + s.get(0) + " / Ticket Type: " + s.get(1));
         }
 
         // sout (which ticket type you want to replace?)
-        System.out.println("From the list above, which ticket type would you like to change?");
-        String index1 = console.nextLine();
+        // System.out.println("From the list above, which ticket type would you like to change?");
+        // String index1 = console.nextLine();
+        System.out.println("Choose who's ticket you want to change");
+        String index0 = console.nextLine();
 
         // ask user to change ticketType
         System.out.println("Please enter your new ticket type below");
         //ask user to replace it with the new ticket type
         //make a brand new variable "newTicketType"
         String newTicketType = console.nextLine();
-        if (index1.equalsIgnoreCase(newTicketType)) {
+        /*if (index1.equalsIgnoreCase(newTicketType)) {
             System.out.println("You entered the same type. Please try again.");
             //return to the opening to allow the user to re-insert.
             makeSelection(openerAndSelect());
         } else {
             // write it back to people.txt with the new type of ticket.
             for (ArrayList<String> s: personList) {
-                if(s.get(1).equals(index1)){
+                if(s.get(0).equals(index0)){
                     s.set(1, newTicketType);
                 }
             }
+        }*/
+        for (ArrayList<String> s: personList) {
+            if(s.get(0).equals(index0)){
+                s.set(1, newTicketType);
+            }
         }
+
+        //come out of the else and save the file under the saveFile method.
         saveFile(personList);
+        //bring back the option for the user to make selection.
         makeSelection(openerAndSelect());
     }
 
