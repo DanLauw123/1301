@@ -1,5 +1,3 @@
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +18,6 @@ public class GroupProject {
     private static String delimit = ",";
 
     /**
-     *
      * @param args
      */
     public static void main(String[] args) {
@@ -57,7 +54,7 @@ public class GroupProject {
 
             // Ask the user to input the name, and retrieve it
             System.out.println("Please insert your name: Else, press 'Q' to quit");
-            String name = console.next();
+            String name = console.nextLine();
             // If the user types in Q, we need to save the ArrayList of people.
             if (name.equalsIgnoreCase("q")) {
                 saveFile(personList);
@@ -65,9 +62,9 @@ public class GroupProject {
                 askAgain = false;
             } else {
                 System.out.println("Please insert the type of ticket");
-                String ticketType = console.next();
+                String ticketType = console.nextLine();
                 System.out.println("Please insert the fine amount: ");
-                String fine = console.next();
+                String fine = console.nextLine();
 
                 // Now we need to save the person to the list
                 person.add(0, name);
@@ -110,7 +107,7 @@ public class GroupProject {
         System.out.println("Opt 2: View entered list (Sorted person name)");
         System.out.println("Opt 3: Display file");
         System.out.println("Opt 4: Search person");
-        System.out.println("Opt 5: View file");
+        System.out.println("Opt 5: Display people in database");
         System.out.println("Opt 6: Make adjustment to ticket type");
         System.out.println("Opt 7: Delete file  \n");
 
@@ -119,7 +116,11 @@ public class GroupProject {
         int i = 0;
         try {
             Scanner console = new Scanner(System.in);
-            i = console.nextInt();
+            try {
+                i = Integer.parseInt(console.nextLine());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
             if (i < 1 || i > 7) {
                 openerAndSelect();
             }
@@ -143,13 +144,14 @@ public class GroupProject {
             case 2:
                 sortedPersonName();
                 break;
-            case 3 :
+            case 3:
                 displayFile();
                 break;
             case 4:
                 searchPerson();
                 break;
             case 5:
+                displayPeople();
                 break;
             case 6:
                 replaceFunction();
@@ -174,6 +176,7 @@ public class GroupProject {
         in.close();
 
         int select = openerAndSelect();
+        System.out.println(" ");
         makeSelection(select);
     }
 
@@ -181,7 +184,6 @@ public class GroupProject {
         boolean match = false;
         System.out.println("Please search a person's name below");
         String searchName = console.nextLine();
-        String home = System.getProperty("user.home");
         BufferedReader br = null;
         try {
             String sCurrentLine;
@@ -193,6 +195,7 @@ public class GroupProject {
                 if (person[0].equalsIgnoreCase(searchName)) {
                     match = true; //if the name matches, the boolean returns true.
                 }
+
             }
 
 
@@ -218,7 +221,7 @@ public class GroupProject {
         ArrayList<String> rows = new ArrayList<String>();
 
         try {
-            if (!file2.exists()){
+            if (!file2.exists()) {
                 file2.createNewFile();
             }
             reader = new BufferedReader(new FileReader(file));
@@ -239,16 +242,13 @@ public class GroupProject {
         }
         outputStream.close();
         System.out.println("Your File is successfully saved under 'sortedPeople.txt'. ");
-        int choice = openerAndSelect();
-        makeSelection(choice);
+        makeSelection(openerAndSelect());
         System.out.println();
     }
+
     // this method is to ask user to replace their ticket type.
     private static void replaceFunction() {
         ArrayList<ArrayList<String>> personList = new ArrayList();
-        ArrayList<String> person = new ArrayList();
-
-        //shows the user
 
         Scanner in = null;
         try {
@@ -257,7 +257,7 @@ public class GroupProject {
             System.out.println(e.getMessage());
         }
         while (in.hasNext()) { // iterates each line in the file
-
+            ArrayList<String> person = new ArrayList();
             String line = in.nextLine();
             String[] newLine = line.split(" ");
             person.clear();
@@ -265,25 +265,22 @@ public class GroupProject {
             person.add(1, newLine[1]);
             person.add(2, newLine[2]);
 
-
             personList.add(person);
 
             //
 
-
-
         }
         in.close();
-        int i=0;
+        int i = 0;
 
-        ArrayList<String> newTicketList = new ArrayList();
         //show them the  (create the for loop)
-
+        for (ArrayList<String> s: personList) {
+            System.out.println(s.get(1));
+        }
 
         // sout (which ticket type you want to replace?)
         System.out.println("From the list above, which ticket type would you like to change?");
         String index1 = console.nextLine();
-
 
         // ask user to change ticketType
         System.out.println("Please enter your new ticket type below");
@@ -296,11 +293,35 @@ public class GroupProject {
             makeSelection(openerAndSelect());
         } else {
             // write it back to people.txt with the new type of ticket.
-            newTicketList.add(newTicketType);
-            personList.add(i, newTicketList);
-            saveFile(personList);
+            for (ArrayList<String> s: personList) {
+                if(s.get(1).equals(index1)){
+                    s.set(1, newTicketType);
+                }
+            }
         }
+        saveFile(personList);
+        makeSelection(openerAndSelect());
+    }
 
+
+    private static void displayPeople() {
+        Scanner in = null;
+        try {
+            in = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        while (in.hasNext()) { // iterates each line in the file
+            String line = in.nextLine();
+            String[] person = line.split(" ");
+            System.out.println(person[0]);
+        }
+        in.close();
+
+        int select = openerAndSelect();
+        System.out.println(" ");
+        makeSelection(select);
+    }
 
 
     /**
@@ -316,7 +337,6 @@ public class GroupProject {
     }
 
     }
-}
 
 
 
